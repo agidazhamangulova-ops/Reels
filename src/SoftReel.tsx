@@ -37,7 +37,7 @@ const ORDER = [1, 10, 8, 6, 5, 9, 4, 3, 2, 12, 11, 7, 13, 15, 14];
 const SIZES = [0.86, 0.74, 0.92, 0.8, 0.7, 0.9, 0.78, 0.95, 0.82, 0.72, 0.88, 0.76];
 const OFFSETS = [0, -30, 20, -10, 40, -40, 10, 30, -20, 0, 25, -15];
 
-const WORDS = ["love my life"];
+const WORDS = ["blessed for everything"];
 
 const Shot: React.FC<{ n: number; i: number }> = ({ n, i }) => {
   const w = SIZES[i % SIZES.length];
