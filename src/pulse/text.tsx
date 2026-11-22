@@ -125,7 +125,8 @@ export const Typewriter: React.FC<{
   caret?: boolean;
   after?: React.ReactNode;
   afterAt?: number;
-}> = ({ text, start, cps = 1.6, size = 52, caret = true, after, afterAt = 0 }) => {
+  accent?: string;
+}> = ({ text, start, cps = 1.6, size = 52, caret = true, after, afterAt = 0, accent = C.greenBright }) => {
   const frame = useCurrentFrame();
   const typed = Math.max(0, Math.min(text.length, Math.floor((frame - start) / cps)));
   const done = typed >= text.length;
@@ -154,7 +155,7 @@ export const Typewriter: React.FC<{
             extrapolateRight: "clamp",
           });
           return (
-            <span key={i} style={{ color: g > 0.05 ? mix(C.greenBright, "#ffffff", 1 - g) : "#fff" }}>
+            <span key={i} style={{ color: g > 0.05 ? mix(accent, "#ffffff", 1 - g) : "#fff" }}>
               {ch}
             </span>
           );
@@ -179,10 +180,11 @@ export const Typewriter: React.FC<{
 };
 
 /** Text that types into a pill: the pill's width follows the typed text. */
-export const TypingPill: React.FC<{ text: string; start: number; cps?: number }> = ({
+export const TypingPill: React.FC<{ text: string; start: number; cps?: number; bg?: string }> = ({
   text,
   start,
   cps = 1.4,
+  bg = C.green,
 }) => {
   const frame = useCurrentFrame();
   const typed = Math.max(0, Math.min(text.length, Math.floor((frame - start) / cps)));
@@ -195,7 +197,7 @@ export const TypingPill: React.FC<{ text: string; start: number; cps?: number }>
       style={{
         display: "inline-flex",
         alignItems: "center",
-        background: C.green,
+        background: bg,
         color: "#fff",
         fontWeight: 600,
         fontSize: "0.82em",

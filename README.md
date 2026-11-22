@@ -1,4 +1,18 @@
-# Pulse promo (Remotion)
+# Promo videos (Remotion)
+
+## PlumoPromo — 1080×1920, 52 s
+
+Vertical Plumo reel in the same style and on the same beat grid as the Pulse cut.
+
+- `src/PlumoPromo.tsx` – timeline
+- `src/plumo/scenes.tsx`, `src/plumo/ui.tsx` – scenes and the Plumo UI (chat, заявка card, dashboard)
+- `public/plumo/man-blue.mp4` – the night shot, regraded from green to blue
+
+```bash
+npx remotion render PlumoPromo out/plumo-promo.mp4
+```
+
+## PulsePromo
 
 52-second 1920×1080 promo for Pulse, rebuilt shot-for-shot from the reference edit.
 
