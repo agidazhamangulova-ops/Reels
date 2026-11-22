@@ -157,7 +157,23 @@ const setMood = async ($: EngineInterface, mood: Mood, tool = '') => {
   void $.ui.status(`✻ Клодик: ${label(b)}`)
 }
 
+// Diagnostics: a small log of what the surfaces did, to debug visibility.
+const DIAG = 'klodik-diag.log'
+const diag = async ($: EngineInterface, line: string) => {
+  try {
+    let old = ''
+    try { old = await $.fs.read(DIAG) } catch { old = '' }
+    await $.fs.write(DIAG, `${old}${new Date().toISOString()} ${line}\n`)
+  } catch { /* never break anything for a log line */ }
+}
+const seenSurfaces = new Set<string>()
+
 export const register: Register = on => {
+  on('session.attach', async ($, e, next) => {
+    void diag($, `attach surface=${e.surface} client=${e.clientId}`)
+    return next(e)
+  })
+
   on('session.start', async ($, e, next) => {
     await $.command.register({ name: 'klodik', description: 'Показать мини-Клодика рядом с чатом' })
     void $.ui.open({ id: PANE, title: 'Мини-Клодик' })
@@ -177,7 +193,8 @@ export const register: Register = on => {
   // then placed at any width (an unasked open waits on narrow screens).
   on('prompt.submit', async ($, e, next) => {
     if (/клодик|klodik/i.test(e.text)) {
-      const opened = await $.ui.open({ id: PANE, title: 'Мини-Клодик' }).catch(() => undefined)
+      const opened = await $.ui.open({ id: PANE, title: 'Мини-Клодик' }).catch((err: unknown) => { void diag($, `open threw ${String(err)}`); return undefined })
+      void diag($, `prompt mention: open=${JSON.stringify(opened)} panes=${JSON.stringify(await $.ui.panes().catch(() => 'err'))}`)
       if (opened && !opened.isPlaced) $.ui.log(`Клодик: панель не поместилась (${opened.reason})`)
       else $.ui.toast('Клодик тут 👋')
     }
@@ -186,6 +203,7 @@ export const register: Register = on => {
 
   // Always-visible one-line Klodik above the prompt, on every screen width.
   on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
+    if (!seenSurfaces.has(e.surface)) { seenSurfaces.add(e.surface); void diag($, `render AbovePrompt surface=${e.surface}`) }
     if (e.props.hasSurvey) return next(e)
     const b = await read($, buddy)
     if (e.surface !== 'terminal') {
@@ -231,6 +249,7 @@ export const register: Register = on => {
   })
 
   on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => {
+    if (!seenSurfaces.has('pane:' + e.surface)) { seenSurfaces.add('pane:' + e.surface); void diag($, `render Pane surface=${e.surface}`) }
     const b = await read($, buddy)
     if (e.surface !== 'terminal') {
       const { Box, Text, Svg } = $.ui.resolve(e)
