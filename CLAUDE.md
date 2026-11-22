@@ -43,3 +43,4 @@
 - Шрифты лежат локально в `public/fonts` (Google Fonts из песочницы недоступны). Для кириллицы грузить `*-cyrillic-*` с `unicodeRange`.
 - Перед отправкой видео — проверить контакт-лист кадров (ffmpeg `tile`), что текст не обрезан и всё читается.
 - Личные фото пользователя (`public/soft/photos/`) не коммитить.
+- Lottie: JSON кладём в `public/lottie/`, в сцене — `<LottieClip file="lottie/имя.json" />` (`src/LottieClip.tsx`). Превью — композиция `LottiePreview` (prop `file`). Слои/группы, идущие раньше в JSON, рисуются поверх.
