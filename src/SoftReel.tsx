@@ -8,6 +8,9 @@ import { loadFont } from "@remotion/fonts";
  * Cut times are taken from the reference reel so they land on its music.
  */
 
+const SCRIPT = "Great Vibes";
+loadFont({ family: SCRIPT, url: staticFile("fonts/great-vibes-latin-400-normal.woff2"), weight: "400" });
+
 const FONT = "Montserrat";
 loadFont({ family: FONT, url: staticFile("fonts/montserrat-latin-600-normal.woff2"), weight: "600" });
 loadFont({
@@ -70,13 +73,13 @@ export const SoftReel: React.FC = () => (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", paddingBottom: 130 }}>
       <div
         style={{
-          fontFamily: FONT,
-          fontWeight: 600,
-          fontSize: 58,
-          lineHeight: "70px",
+          fontFamily: SCRIPT,
+          fontWeight: 400,
+          fontSize: 104,
+          lineHeight: "120px",
           color: "#fff",
           textAlign: "center",
-          textShadow: "0 1px 3px rgba(0,0,0,0.35), 0 0 1px rgba(0,0,0,0.4)",
+          textShadow: "0 2px 10px rgba(0,0,0,0.45), 0 0 2px rgba(0,0,0,0.35)",
           letterSpacing: "0.005em",
         }}
       >
