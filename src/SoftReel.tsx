@@ -3,7 +3,7 @@ import { AbsoluteFill, Audio, Img, Sequence, staticFile } from "remotion";
 import { loadFont } from "@remotion/fonts";
 
 /**
- * "Soft aesthetic" reel: dusty-pink background, photos cut on the beat at
+ * "Soft aesthetic" reel: white background, photos cut on the beat at
  * varying sizes, a fixed centred list of affirmations on top.
  * Cut times are taken from the reference reel so they land on its music.
  */
@@ -18,17 +18,19 @@ loadFont({
 });
 
 export const SOFT_FPS = 30;
-const BG = "rgb(184,130,143)";
+const BG = "#FFFFFF";
 
 // Beat cuts (seconds) measured from the reference video.
-const CUTS = [
+const BEATS = [
   0, 0.233, 0.367, 0.6, 1.1, 1.3, 1.5, 2.0, 2.267, 2.6, 2.933, 3.167, 3.3, 3.533, 4.033, 4.233, 4.433, 4.933, 5.2, 5.533, 5.867, 6.1,
   6.233, 6.467, 6.967, 7.167, 7.367, 7.867, 8.133, 8.467, 8.93,
 ];
+// Every other beat: 15 shots, each photo once.
+const CUTS = BEATS.filter((_, i) => i % 2 === 0);
 export const SOFT_DURATION = Math.round(CUTS[CUTS.length - 1] * SOFT_FPS);
 
-// 30 shots: every photo twice, in an order that never repeats back-to-back.
-const ORDER = [9, 13, 1, 12, 5, 11, 15, 4, 2, 14, 6, 10, 3, 8, 7, 1, 9, 11, 5, 15, 12, 4, 13, 2, 10, 6, 14, 8, 3, 7];
+// 15 shots: every photo once.
+const ORDER = [9, 13, 1, 12, 5, 11, 15, 4, 2, 14, 6, 10, 3, 8, 7];
 // Size of each shot as a share of the frame width; varied like the reference.
 const SIZES = [0.86, 0.74, 0.92, 0.8, 0.7, 0.9, 0.78, 0.95, 0.82, 0.72, 0.88, 0.76];
 const OFFSETS = [0, -30, 20, -10, 40, -40, 10, 30, -20, 0, 25, -15];
