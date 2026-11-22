@@ -1,0 +1,10 @@
+{
+  "name": "klodik",
+  "version": "0.1.0",
+  "description": "A tiny Claude buddy beside the chat that shows what Claude is doing",
+  "types": "./types/index.d.ts",
+  "license": "MIT",
+  "author": {
+    "name": "Reels"
+  }
+}
