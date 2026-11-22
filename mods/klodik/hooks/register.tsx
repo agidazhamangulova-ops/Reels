@@ -41,6 +41,15 @@ const FACES: Record<Mood, [string[], string[]]> = {
   ],
 }
 
+// One-line faces for the row above the prompt.
+const MINI: Record<Mood, [string, string]> = {
+  idle: ['(◕‿◕)', '(−‿−)'],
+  thinking: ['(◔~◔)∘', '(◑~◑)°'],
+  working: ['(●▿●)╯', '╰(●▿●)'],
+  done: ['✦(^◡^)', '(^◡^)✦'],
+  oops: ['(×︵×)', '(;︵;)'],
+}
+
 // What each tool looks like to a person.
 const TOOL_WORDS: Record<string, string> = {
   Bash: 'запускает команду',
@@ -89,6 +98,30 @@ export const register: Register = on => {
   on('command.run', { command: 'klodik' }, async $ => {
     await $.ui.open({ id: PANE, title: 'Мини-Клодик' })
     return { text: 'Мини-Клодик рядом 👋' }
+  })
+
+  // A message that mentions Klodik counts as the person asking: the pane is
+  // then placed at any width (an unasked open waits on narrow screens).
+  on('prompt.submit', async ($, e, next) => {
+    if (/клодик|klodik/i.test(e.text)) {
+      const opened = await $.ui.open({ id: PANE, title: 'Мини-Клодик' }).catch(() => undefined)
+      if (opened && !opened.isPlaced) $.ui.log(`Клодик: панель не поместилась (${opened.reason})`)
+      else $.ui.toast('Клодик тут 👋')
+    }
+    return next(e)
+  })
+
+  // Always-visible one-line Klodik above the prompt, on every screen width.
+  on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
+    if (e.props.hasSurvey) return next(e)
+    const { Box, Text } = $.ui.resolve(e)
+    const b = await read($, buddy)
+    return (
+      <Box>
+        <Text color={ORANGE}>{MINI[b.mood][b.frame % 2] ?? MINI.idle[0]} </Text>
+        <Text>Клодик: {label(b)}</Text>
+      </Box>
+    )
   })
 
   on('turn.start', async ($, e, next) => {
