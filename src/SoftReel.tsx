@@ -8,8 +8,8 @@ import { loadFont } from "@remotion/fonts";
  * Cut times are taken from the reference reel so they land on its music.
  */
 
-const SCRIPT = "Great Vibes";
-loadFont({ family: SCRIPT, url: staticFile("fonts/great-vibes-latin-400-normal.woff2"), weight: "400" });
+const SCRIPT = "Pinyon Script";
+loadFont({ family: SCRIPT, url: staticFile("fonts/pinyon-script-latin-400-normal.woff2"), weight: "400" });
 
 const FONT = "Montserrat";
 loadFont({ family: FONT, url: staticFile("fonts/montserrat-latin-600-normal.woff2"), weight: "600" });
@@ -75,7 +75,7 @@ export const SoftReel: React.FC = () => (
         style={{
           fontFamily: SCRIPT,
           fontWeight: 400,
-          fontSize: 104,
+          fontSize: 88,
           lineHeight: "120px",
           color: "#fff",
           textAlign: "center",
