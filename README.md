@@ -1,54 +1,17 @@
-# Remotion video
+# Pulse promo (Remotion)
 
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.apng">
-      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
-    </picture>
-  </a>
-</p>
+52-second 1920×1080 promo for Pulse, rebuilt shot-for-shot from the reference edit.
 
-Welcome to your Remotion project!
+- `src/PulsePromo.tsx` – the timeline (seconds → scenes)
+- `src/pulse/scenes.tsx` – every scene
+- `src/pulse/ui.tsx` – the Pulse app UI drawn in React (overview, content, sources, contacts, journey, funnel builder, workspace modal)
+- `src/pulse/text.tsx` – kinetic type, pills, typewriter
+- `public/footage-*.mp4`, `public/soundtrack.m4a` – the two live-action shots and the music, cut from the reference video
 
-## Commands
-
-**Install Dependencies**
-
-```console
-npm i --loglevel=error
+```bash
+npm i
+npx remotion studio                       # preview / edit
+npx remotion render PulsePromo out/pulse-promo.mp4
 ```
 
-**Start Preview**
-
-```console
-npm run dev
-```
-
-**Render video**
-
-```console
-npx remotion render
-```
-
-**Upgrade Remotion**
-
-```console
-npx remotion upgrade
-```
-
-## Docs
-
-Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
-
-## Help
-
-We provide help on our [Discord server](https://discord.gg/6VzzNDwUwV).
-
-## Issues
-
-Found an issue with Remotion? [File an issue here](https://github.com/remotion-dev/remotion/issues/new).
-
-## License
-
-Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
+In an offline sandbox add `--browser-executable=/path/to/chrome-headless-shell`.
