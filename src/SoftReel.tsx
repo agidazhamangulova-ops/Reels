@@ -29,13 +29,15 @@ const BEATS = [
 const CUTS = BEATS.filter((_, i) => i % 2 === 0);
 export const SOFT_DURATION = Math.round(CUTS[CUTS.length - 1] * SOFT_FPS);
 
-// 15 shots: every photo once.
-const ORDER = [9, 13, 1, 12, 5, 11, 15, 4, 2, 14, 6, 10, 3, 8, 7];
+// 15 shots, alternating a "view" (places, food, things) with people.
+// views: 1 pumpkins, 8 coffee, 5 manga, 4 bowl, 2 popcorn, 11 laptop, 13 polaroids, 14 flowers
+// people: 10, 6, 9, 3, 12, 7, 15
+const ORDER = [1, 10, 8, 6, 5, 9, 4, 3, 2, 12, 11, 7, 13, 15, 14];
 // Size of each shot as a share of the frame width; varied like the reference.
 const SIZES = [0.86, 0.74, 0.92, 0.8, 0.7, 0.9, 0.78, 0.95, 0.82, 0.72, 0.88, 0.76];
 const OFFSETS = [0, -30, 20, -10, 40, -40, 10, 30, -20, 0, 25, -15];
 
-const WORDS = ["speak less", "do more", "small circle", "private life", "feminine energy", "peaceful mind", "kind heart", "no competition", "secure"];
+const WORDS = ["love my life"];
 
 const Shot: React.FC<{ n: number; i: number }> = ({ n, i }) => {
   const w = SIZES[i % SIZES.length];
@@ -70,8 +72,8 @@ export const SoftReel: React.FC = () => (
         style={{
           fontFamily: FONT,
           fontWeight: 600,
-          fontSize: 42,
-          lineHeight: "52px",
+          fontSize: 58,
+          lineHeight: "70px",
           color: "#fff",
           textAlign: "center",
           textShadow: "0 1px 3px rgba(0,0,0,0.35), 0 0 1px rgba(0,0,0,0.4)",
